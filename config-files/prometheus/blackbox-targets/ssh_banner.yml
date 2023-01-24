@@ -1,0 +1,7 @@
+# Check SSH status of endpoint
+- labels:
+    module: ssh_banner
+  targets:
+    - 192.168.56.101:22
+    - 192.168.56.103:22
+    - 192.168.56.104:22

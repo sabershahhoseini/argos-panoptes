@@ -1,0 +1,7 @@
+# Check TLS and SSL with your own client certs (For when you need to provide your own certs before sending a request)
+- labels:
+    module: http_2xx_client
+  targets:
+    - https://192.168.56.101:2379    # Target to probe with https.
+    - https://192.168.56.103:2379    # Target to probe with https.
+    - https://192.168.56.104:2379
