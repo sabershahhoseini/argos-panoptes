@@ -1,0 +1,12 @@
+---
+- name: Include blackbox and node exporters setup task
+  include_tasks: setup_exporters.yml
+  when: action is defined and action == "setup_exporters"
+
+- name: Include Prometheus setup task
+  include_tasks: setup_prometheus.yml
+  when: action is defined and action == "setup_prometheus"
+
+- name: Include Grafana setup task
+  include_tasks: setup_grafana.yml
+  when: action is defined and action == "setup_grafana"

@@ -1,0 +1,54 @@
+---
+  - name: Create a working directory at "/opt/panoptes" for storing config files
+    file:
+      path: "/opt/panoptes/prometheus/blackbox-targets"
+      state: directory
+      recurse: yes
+
+  - name: Copy prometheus config file
+    template:
+      src: ./templates/prometheus.yml.j2
+      dest: "/opt/panoptes/prometheus/prometheus.yml"
+
+  - name: Copy blackbox icmp module
+    template:
+      src: ./templates/icmp.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/icmp.yml"
+
+  - name: Copy blackbox http_2xx module
+    template:
+      src: ./templates/http_2xx.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/http_2xx.yml"
+
+  - name: Copy blackbox http_2xx_client module
+    template:
+      src: ./templates/http_2xx_client.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/http_2xx_client.yml"
+
+  - name: Copy blackbox tcp_connect module
+    template:
+      src: ./templates/tcp_connect.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/tcp_connect.yml"
+
+  - name: Copy blackbox ssh_banner module
+    template:
+      src: ./templates/ssh_banner.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/ssh_banner.yml"
+
+  - name: Copy blackbox https_2xx module
+    template:
+      src: ./templates/https_2xx.yml.j2
+      dest: "/opt/panoptes/prometheus/blackbox-targets/https_2xx.yml"
+
+  - name: Launch prometheus container
+    docker_container:
+      image: prom/prometheus:latest
+      name: "prometheus"
+      volumes:
+        - "/opt/panoptes/prometheus:/etc/prometheus"
+        - "prometheus-data:/prometheus"
+      restart_policy: unless-stopped
+      state: started
+      ports:
+        - "9090:9090"
+      command: --config.file=/etc/prometheus/prometheus.yml

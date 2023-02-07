@@ -1,0 +1,50 @@
+all:
+  hosts:
+  children:
+
+# Blackbox exporter and Node exporter hosts
+    exporters:
+      hosts:
+        node-11:
+          ip: 192.168.56.111
+
+# Job name that will be configured in prometheus.yml file.
+          job_name: blackbox_node_1
+        node-12:
+          ip: 192.168.56.112
+          job_name: blackbox_node_2
+        node-13:
+          ip: 192.168.56.113
+          job_name: blackbox_node_3
+
+# Prometheus and Grafana host. Delete the group if you don't want to setup Grafana and Prometheus.
+    monitoring:
+      hosts:
+        node-11:
+          ip: 192.168.56.111
+  vars:
+
+# Each Blackbox exporter will ping hosts defined below.
+    ping_endpoints:
+      - 192.168.56.111
+      - 192.168.56.112
+      - 192.168.56.113
+
+# Each Blackbox exporter will check ssh connection of hosts defined below.
+    ssh_endpoints:
+      - 192.168.56.111
+      - 192.168.56.112
+      - 192.168.56.113
+
+# Each Blackbox exporter will check HTTP and HTTPS connection status of hosts defined below.
+    http_https_endpoints:
+      - https://jibit.ir
+      - 192.168.56.101
+      - 192.168.56.102
+      - 192.168.56.103
+
+# Each Blackbox exporter will check TCP connection status of hosts defined below.
+    tcp_endpoints:
+      - 192.168.56.101:8000
+      - 192.168.56.102:8000
+      - 192.168.56.103:8000

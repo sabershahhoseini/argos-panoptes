@@ -1,7 +1,0 @@
-# Send HTTP and HTTPS requests and check status of endpoints
-- labels:
-    module: http_2xx
-  targets:
-    - 192.168.56.101
-    - 192.168.56.103
-    - 192.168.56.104

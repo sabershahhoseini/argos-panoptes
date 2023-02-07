@@ -1,0 +1,6 @@
+- labels:
+    module: icmp
+  targets:
+{% for endpoint in ping_endpoints %}
+    - {{ endpoint }}
+{% endfor %}
