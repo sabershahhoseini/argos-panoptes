@@ -1,0 +1,11 @@
+---
+  - name: Launch Grafana exporter container
+    docker_container:
+      image: grafana/grafana:latest
+      name: "grafana"
+      volumes:
+        - "grafana-data:/var/lib/grafana"
+      restart_policy: unless-stopped
+      state: started
+      ports:
+        - "3000:3000"

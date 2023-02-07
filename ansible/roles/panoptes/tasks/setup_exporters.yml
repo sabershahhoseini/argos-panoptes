@@ -1,0 +1,39 @@
+---
+  - name: Install requests python module
+    pip:
+      name: requests
+
+  - name: Create a working directory at "/opt/panoptes" for storing config files
+    file:
+      path: "/opt/panoptes/blackbox"
+      state: directory
+      recurse: yes
+  
+  - name: Copy blackbox config file
+    copy:
+      src: ./files/blackbox.yml
+      dest: "/opt/panoptes/blackbox/blackbox.yml"
+
+  - name: Launch blackbox exporter container
+    docker_container:
+      image: prom/blackbox-exporter:latest
+      name: "blackbox_exporter"
+      volumes:
+        - "/opt/panoptes/blackbox:/etc/blackbox"
+      restart_policy: unless-stopped
+      command: --config.file=/etc/blackbox/blackbox.yml
+      state: started
+      ports:
+        - "9115:9115"
+
+  - name: Launch node exporter container
+    docker_container:
+      image: prom/node-exporter:latest
+      name: "node_exporter"
+      network_mode: host
+      pid_mode: host
+      volumes:
+        - "/:/host:ro,rslave"
+      restart_policy: unless-stopped
+      command: --path.rootfs=/host
+      state: started

@@ -1,0 +1,33 @@
+---
+- name: Converge - Install blackbox exporter and node exporter
+  hosts: exporters
+  become: true
+  become_method: sudo
+  vars:
+    action: "setup_exporters"
+  tasks:
+    - name: "Include jbt.panoptes"
+      include_role:
+        name: "jbt.panoptes"
+
+- name: Converge - Install Prometheus
+  hosts: monitoring
+  become: true
+  become_method: sudo
+  vars:
+    action: "setup_prometheus"
+  tasks:
+    - name: "Include jbt.panoptes"
+      include_role:
+        name: "jbt.panoptes"
+
+- name: Converge - Install Grafana
+  hosts: monitoring
+  become: true
+  become_method: sudo
+  vars:
+    action: "setup_grafana"
+  tasks:
+    - name: "Include jbt.panoptes"
+      include_role:
+        name: "jbt.panoptes"

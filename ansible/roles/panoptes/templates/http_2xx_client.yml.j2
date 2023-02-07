@@ -1,0 +1,6 @@
+- labels:
+    module: http_2xx_client
+  targets:
+{% for endpoint in https_two_way_ssl_endpoints %}
+    - {{ endpoint }}
+{% endfor %}

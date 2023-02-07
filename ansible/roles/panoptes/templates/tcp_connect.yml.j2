@@ -1,0 +1,6 @@
+- labels:
+    module: tcp_connect
+  targets:
+{% for item in tcp_endpoints %}
+    - {{ item }}
+{% endfor %}

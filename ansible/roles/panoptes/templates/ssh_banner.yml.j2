@@ -1,0 +1,6 @@
+- labels:
+    module: ssh_banner
+  targets:
+{% for endpoint in ssh_endpoints %}
+    - {{ endpoint }}
+{% endfor %}

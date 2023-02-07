@@ -1,0 +1,6 @@
+- labels:
+    module: http_2xx
+  targets:
+{% for endpoint in http_https_endpoints %}
+    - {{ endpoint }}
+{% endfor %}
